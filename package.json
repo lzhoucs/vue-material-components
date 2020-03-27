@@ -2,6 +2,12 @@
   "name": "vue-material-components",
   "version": "0.1.0",
   "description": "Material Components in Vue.js",
+  "keywords": [
+    "material-components-web",
+    "mdc-web",
+    "material-design",
+    "vue"
+  ],
   "main": "index.js",
   "repository": "https://github.com/todo/github.url",
   "author": "Liang Zhou <lzhoucs@gmail.com>",
