@@ -1,0 +1,43 @@
+* DONE
+Don't do plugin for now:
+  - vuetify 2's plugin doesn't seem to be useful
+  - vue 3 doesn't seem to have a plugin system documented yet(at least I haven't
+    found)
+Start development
+* DONE build
+** translate vue-next-webpack-preview
+
+* vue-material-components
+
+Material Components in Vue.js
+
+** Installation with bundler
+
+Install the ~vue-material-components~ package:
+#+BEGIN_SRC sh
+npm install --save vue-material-components
+
+# or with yarn
+yarn add vue-material-components
+#+END_SRC
+
+ Import component javascript and css:
+#+BEGIN_SRC vue
+<template>
+  <vmc-button>Hello</vmc-button>
+</template>
+
+<script>
+  import {VmcButton} from 'vue-material-components'
+</script>
+
+<style>
+  @import "~vue-material-components/dist/main.min.css";
+</style>
+#+END_SRC
+
+** Installation with CDN
+#+BEGIN_SRC html
+  <link href="https://cdn.site/vue-material-components/main.min.css" rel="stylesheet">
+ <script src="https://cdn.site/vue-material-components/main.min.js"></script>
+#+END_SRC
