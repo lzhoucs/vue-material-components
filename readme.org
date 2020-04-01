@@ -1,12 +1,3 @@
-* DONE
-Don't do plugin for now:
-  - vuetify 2's plugin doesn't seem to be useful
-  - vue 3 doesn't seem to have a plugin system documented yet(at least I haven't
-    found)
-Start development
-* DONE build
-** translate vue-next-webpack-preview
-
 * vue-material-components
 
 Material Components in Vue.js
