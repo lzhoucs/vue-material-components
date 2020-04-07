@@ -30,5 +30,7 @@
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
   },
-  "dependencies": {}
+  "dependencies": {
+    "material-components-web": "^5.1.0"
+  }
 }
