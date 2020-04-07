@@ -11,10 +11,6 @@ const ACTIVATION_EVENT_TYPES = [
 
 const getWindowPageOffset = () => ({x: window.pageXOffset, y: window.pageYOffset})
 
-  const getFgTranslationCoordinates = () => {
-
-    return {startPoint, endPoint};
-  }
 const activate = evt => {
 
   const el = evt.target
@@ -23,14 +19,14 @@ const activate = evt => {
   const { width, height } = el.getBoundingClientRect();
   const maxDim = Math.max(width, height);
   const hypotenuse = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
-  const maxRadius = hypotenuse + MDCRippleFoundation.numbers.PADDING;
+  const maxRadius = hypotenuse + numbers.PADDING;
   const initialSize = Math.floor(maxDim * numbers.INITIAL_ORIGIN_SCALE);
 
     const {
       VAR_FG_SIZE, VAR_FG_SCALE
     } = strings;
 
-  el.style.setProperty(VAR_FG_SIZE, `${initialSize_}px`);
+  el.style.setProperty(VAR_FG_SIZE, `${initialSize}px`);
   el.style.setProperty(VAR_FG_SCALE, `${maxRadius / initialSize}`);
 
 
