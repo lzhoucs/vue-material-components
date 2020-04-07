@@ -1,5 +1,6 @@
 import {numbers, strings, cssClasses} from '@material/ripple/constants'
 import {getNormalizedEventCoords} from '@material/ripple/util';
+import './index.sass';
 
 const ACTIVATION_EVENT_TYPES = [
   // only mousedown for now

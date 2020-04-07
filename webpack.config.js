@@ -36,7 +36,11 @@ module.exports = {
             options: {
               // Prefer `dart-sass`
               implementation: require('sass'),
+              // https://github.com/webpack-contrib/sass-loader/issues/804#issuecomment-586095020
+              // https://github.com/material-components/material-components-web/issues/5734
+              webpackImporter: false,
               sassOptions: {
+                includePaths: ['node_modules'],
                 indentedSyntax: true
               }
             },
@@ -59,5 +63,6 @@ module.exports = {
       filename: '[name].min.css'
     })
   ],
-  devtool: "source-map"
+  // devtool: "source-map"
+  devtool: 'cheap-module-eval-source-map'
 };
