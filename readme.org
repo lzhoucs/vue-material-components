@@ -1,6 +1,6 @@
 * vue-material-components
 
-Material Components in Vue.js
+A strict material-components-web reimplementation in Vue.js natively
 
 ** Installation with bundler
 

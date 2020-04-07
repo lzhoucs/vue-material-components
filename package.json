@@ -1,7 +1,7 @@
 {
   "name": "vue-material-components",
   "version": "0.0.1",
-  "description": "Material Components in Vue.js",
+  "description": "A strict material-components-web reimplementation in Vue.js natively",
   "keywords": [
     "material-components-web",
     "mdc-web",
