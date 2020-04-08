@@ -2,6 +2,8 @@ import {numbers, strings, cssClasses} from '@material/ripple/constants'
 import {getNormalizedEventCoords} from '@material/ripple/util';
 import './index.sass';
 
+const MDC_RIPPLE_CLASS = 'mdc-ripple-surface'
+
 const ACTIVATION_EVENT_TYPES = [
   // only mousedown for now
   'mousedown'
@@ -10,11 +12,34 @@ const ACTIVATION_EVENT_TYPES = [
   // 'keydown'
 ];
 
+const POINTER_DEACTIVATION_EVENT_TYPES = [
+  // only mouseup for now
+  'mouseup'
+  // 'touchend',
+  // 'pointerup',
+  // 'contextmenu'
+];
+
 const getWindowPageOffset = () => ({x: window.pageXOffset, y: window.pageYOffset})
 
-const activate = evt => {
-
+const deactivate = evt => {
   const el = evt.target
+  el.removeEventListener('keyup', deactivate)
+      requestAnimationFrame(() => {
+        el.classList.remove(cssClasses.FG_ACTIVATION)
+        el.classList.add(cssClasses.FG_DEACTIVATION)
+        setTimeout(() => {
+          el.classList.remove(cssClasses.FG_DEACTIVATION);
+      }, numbers.FG_DEACTIVATION_MS);
+        el._state = {}
+      })
+}
+
+const activate = evt => {
+  const el = evt.target
+  const state = el._state
+
+  POINTER_DEACTIVATION_EVENT_TYPES.forEach(evtType => el.addEventListener(evtType, deactivate));
 
   // layoutInternal
   const { width, height } = el.getBoundingClientRect();
@@ -54,13 +79,15 @@ const activate = evt => {
     el.style.setProperty(VAR_FG_TRANSLATE_START, translateStart);
     el.style.setProperty(VAR_FG_TRANSLATE_END, translateEnd);
 
-//     this.adapter_.addClass(FG_ACTIVATION);
-//     this.activationTimer_ = setTimeout(() => this.activationTimerCallback_(), DEACTIVATION_TIMEOUT_MS);
+    el.classList.add(cssClasses.FG_ACTIVATION);
 }
 
 export default {
     // directive definition
     beforeMount: function (el) {
+      el._state = {}
+      el.classList.add(cssClasses.ROOT, MDC_RIPPLE_CLASS)
+
       ACTIVATION_EVENT_TYPES.forEach(evtType => el.addEventListener(evtType, activate));
     }
   }
