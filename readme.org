@@ -1,6 +1,7 @@
 * vue-material-components
 
-A strict material-components-web reimplementation in Vue.js natively
+A strict material-components-web reimplementation in Vue.js natively reusing
+original stylings
 
 ** Installation with bundler
 
@@ -29,6 +30,6 @@ yarn add vue-material-components
 
 ** Installation with CDN
 #+BEGIN_SRC html
-  <link href="https://cdn.site/vue-material-components/main.min.css" rel="stylesheet">
+ <link href="https://cdn.site/vue-material-components/main.min.css" rel="stylesheet">
  <script src="https://cdn.site/vue-material-components/main.min.js"></script>
 #+END_SRC

@@ -1,0 +1,26 @@
+* ripple
+
+Implemented as a vue directive for ease of use. See: [[https://github.com/material-components/material-components-web/tree/master/packages/mdc-ripple][mdc-ripple]] for more details.
+
+** Usage
+
+Import it and export as a directive in your component:
+#+BEGIN_SRC vue
+<script>
+import { ripple } from 'vue-material-components'
+
+export default {
+  directives: {
+    ripple
+  }
+}
+
+</script>
+#+END_SRC
+
+Use it as a regular vue directive ~v-ripple~
+#+BEGIN_SRC vue
+  <div v-ripple>
+  </div>
+
+#+END_SRC
