@@ -1,4 +1,4 @@
-import TestComponent from "./components/TestComponent.vue"
+import VmcButton from "./components/VmcButton.vue"
 import ripple from "./directives/ripple"
 
-export {TestComponent, ripple}
+export {VmcButton, ripple}
