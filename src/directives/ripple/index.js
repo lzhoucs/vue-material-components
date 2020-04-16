@@ -1,5 +1,6 @@
 import {numbers, strings, cssClasses} from '@material/ripple/constants'
 import {getNormalizedEventCoords} from '@material/ripple/util';
+import {applyPassive} from '@material/dom/events';
 import './index.sass';
 
 const MDC_RIPPLE_CLASS = 'mdc-ripple-surface'
@@ -23,7 +24,7 @@ const POINTER_DEACTIVATION_EVENT_TYPES = [
 const getWindowPageOffset = () => ({x: window.pageXOffset, y: window.pageYOffset})
 
 const deactivate = evt => {
-  const el = evt.target
+  const el = evt.currentTarget
   el.removeEventListener('keyup', deactivate)
       requestAnimationFrame(() => {
         el.classList.remove(cssClasses.FG_ACTIVATION)
@@ -36,10 +37,10 @@ const deactivate = evt => {
 }
 
 const activate = evt => {
-  const el = evt.target
+  const el = evt.currentTarget
   const state = el._state
 
-  POINTER_DEACTIVATION_EVENT_TYPES.forEach(evtType => el.addEventListener(evtType, deactivate));
+  POINTER_DEACTIVATION_EVENT_TYPES.forEach(evtType => addEventListener(el, evtType, deactivate));
 
   // layoutInternal
   const { width, height } = el.getBoundingClientRect();
@@ -82,12 +83,18 @@ const activate = evt => {
     el.classList.add(cssClasses.FG_ACTIVATION);
 }
 
+const needsRippleClass = el => !['mdc-button'].some(cls => el.classList.contains(cls))
+
 export default {
     // directive definition
     beforeMount: function (el) {
       el._state = {}
-      el.classList.add(cssClasses.ROOT, MDC_RIPPLE_CLASS)
+      el.classList.add(cssClasses.ROOT)
 
-      ACTIVATION_EVENT_TYPES.forEach(evtType => el.addEventListener(evtType, activate));
+      if (needsRippleClass(el)) el.classList.add(MDC_RIPPLE_CLASS)
+
+      ACTIVATION_EVENT_TYPES.forEach(evtType => addEventListener(el, evtType, activate));
     }
   }
+
+const addEventListener = (el, evtType, handler) => el.addEventListener(evtType, handler, applyPassive())

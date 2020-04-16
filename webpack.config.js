@@ -33,6 +33,12 @@ module.exports = (env = {}) => ({
     }
   },
 
+  resolve: {
+    alias: {
+      'D': `${__dirname }/src/directives`
+    }
+  },
+
   module: {
     rules: [
       {
