@@ -76,7 +76,7 @@ module.exports = (env = {}) => ({
       filename: '[name].min.css'
     }),
     // uncomment on demand
-    new BundleAnalyzerPlugin()
+    // new BundleAnalyzerPlugin()
   ],
   devtool: "source-map",
   // devtool: 'cheap-module-eval-source-map'
