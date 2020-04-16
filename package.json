@@ -9,7 +9,8 @@
     "vue"
   ],
   "scripts": {
-    "build": "webpack --mode=production"
+    "build": "webpack --env.prod1",
+    "build:debug": "node --inspect-brk node_modules/.bin/webpack --mode=production"
   },
   "main": "dist/main.min.js",
   "repository": "https://github.com/todo/github.url",
@@ -28,6 +29,7 @@
     "vue": "^3.0.0-alpha.12",
     "vue-loader": "^16.0.0-alpha.3",
     "webpack": "^4.42.1",
+    "webpack-bundle-analyzer": "^3.6.1",
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {

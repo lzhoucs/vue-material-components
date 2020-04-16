@@ -1,4 +1,6 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+//
 //
 // we need both 'vue-loader' and this plugin, similar to vue 2:
 // https://vue-loader.vuejs.org/guide/#manual-setup
@@ -8,10 +10,11 @@ const { VueLoaderPlugin } = require('vue-loader')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
-module.exports = {
+module.exports = (env = {}) => ({
   entry: [
     './src/index.js'
   ],
+  mode: env.prod ? 'production' : 'development',
   output: {
     path: `${__dirname}/dist`,
     filename: "[name].min.js",
@@ -20,6 +23,16 @@ module.exports = {
     // this is a must have for library
     libraryTarget: 'umd'
   },
+  // copied from vuetify
+  externals: {
+    vue: {
+      commonjs: 'vue',
+      commonjs2: 'vue',
+      amd: 'vue',
+      root: 'Vue'
+    }
+  },
+
   module: {
     rules: [
       {
@@ -61,8 +74,13 @@ module.exports = {
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].min.css'
-    })
+    }),
+    // uncomment on demand
+    new BundleAnalyzerPlugin()
   ],
-  // devtool: "source-map"
-  devtool: 'cheap-module-eval-source-map'
-};
+  devtool: "source-map",
+  // devtool: 'cheap-module-eval-source-map'
+  optimization: {
+    // minimize: false
+  }
+});
