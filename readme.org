@@ -3,6 +3,13 @@
 A strict material-components-web reimplementation in Vue.js natively reusing
 original stylings
 
+Add [[https://material.io/tools/icons/][Material Icons]] from Google Fonts
+#+BEGIN_SRC
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+#+END_SRC
+
+Then proceed with one of the following:
+
 ** Installation with bundler
 
 Install the ~vue-material-components~ package:
