@@ -1,7 +1,7 @@
 <template>
  <button class="mdc-button" v-ripple>
    <div class="mdc-button__ripple"></div>
-   <span class="mdc-button__label"><slot>Button Label</slot></span>
+   <span class="mdc-button__label"><slot></slot></span>
 </button>
 </template>
 

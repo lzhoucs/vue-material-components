@@ -1,0 +1,24 @@
+* VmcButton
+
+See: [[https://github.com/material-components/material-components-web/tree/master/packages/mdc-button][mdc-button]] for more details.
+
+** Usage
+
+Import it and export as a component in your component:
+#+BEGIN_SRC vue
+<script>
+import { VmcButton } from 'vue-material-components'
+
+export default {
+  components: {
+    VmcButton
+  }
+}
+
+</script>
+#+END_SRC
+
+Use it as a regular vue component
+#+BEGIN_SRC vue
+<vmc-button>Text Button</vmc-button>
+#+END_SRC
