@@ -1,5 +1,7 @@
 <template>
- <button class="mdc-button" v-ripple>
+  <button class="mdc-button"
+    :class="raised && 'mdc-button--raised'"
+    v-ripple>
    <div class="mdc-button__ripple"></div>
    <span class="mdc-button__label"><slot></slot></span>
 </button>
@@ -10,6 +12,12 @@ import ripple from 'D/ripple'
 
 export default {
   name: 'vpc-button',
+  props: {
+    raised: {
+      type: Boolean,
+      default: false
+    }
+  },
   directives: {
     ripple
   }
