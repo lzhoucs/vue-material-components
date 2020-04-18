@@ -83,15 +83,13 @@ const activate = evt => {
     el.classList.add(cssClasses.FG_ACTIVATION);
 }
 
-const needsRippleClass = el => !['mdc-button'].some(cls => el.classList.contains(cls))
-
 export default {
     // directive definition
-    beforeMount: function (el) {
+    beforeMount: function (el, {arg} ) {
       el._state = {}
       el.classList.add(cssClasses.ROOT)
 
-      if (needsRippleClass(el)) el.classList.add(MDC_RIPPLE_CLASS)
+      if (!arg === 'no-surface') el.classList.add(MDC_RIPPLE_CLASS)
 
       ACTIVATION_EVENT_TYPES.forEach(evtType => addEventListener(el, evtType, activate));
     }
