@@ -1,7 +1,8 @@
 * vue-material-components
 
 A strict material-components-web reimplementation in Vue.js natively reusing
-original stylings
+original stylings. Writen in Vue 3 and levarged composite APIs where possible
+for better performance and maintainability.
 
 Add [[https://material.io/tools/icons/][Material Icons]] from Google Fonts
 #+BEGIN_SRC
