@@ -1,7 +1,10 @@
 <template>
-  <button class="mdc-icon-button material-icons"
+  <button class="mdc-icon-button"
+    :class="modelValue && 'mdc-icon-button--on'"
     v-ripple:no-surface&unbounded
+    @click="$emit('update:modelValue', !modelValue)"
   ><slot></slot></button>
+
 </template>
 
 <script>
@@ -9,6 +12,12 @@ import ripple from 'D/ripple'
 
 export default {
   name: 'vmc-icon-button',
+  props: {
+    modelValue: {
+      type: Boolean,
+      default: false
+    }
+  },
   directives: {
     ripple
   }

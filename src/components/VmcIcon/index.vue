@@ -1,5 +1,5 @@
 <template>
-  <i class="material-icons mdc-button__icon" aria-hidden="true">
+  <i class="material-icons">
     <slot></slot>
   </i>
 </template>
