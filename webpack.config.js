@@ -35,7 +35,8 @@ module.exports = (env = {}) => ({
 
   resolve: {
     alias: {
-      'D': `${__dirname }/src/directives`
+      'D': `${__dirname }/src/directives`,
+      '@': `${__dirname }/src`
     }
   },
 

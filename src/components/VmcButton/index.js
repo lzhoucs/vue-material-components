@@ -1,5 +1,6 @@
 import RegularButton from './Button.vue'
 import IconButton from './IconButton.vue'
+import {mergeClasses} from '@/util'
 import { h } from 'vue'
 
 const buttonIconClass = "mdc-button__icon"
@@ -12,14 +13,10 @@ export default (props, {slots, attrs}) => {
         && children.every(child => isIconComponent(child)) ? IconButton : RegularButton
 
   if (IconButton === component) {
-    children.forEach((vnode, indx) => addProps(vnode, {
-      class: iconButtonIconClass + (indx ===0 && children.length === 2 ? ` ${iconButtonIconClass}--on` : '')
-    }))
+    children.forEach((vnode, indx) => mergeClasses(vnode, iconButtonIconClass + (indx ===0 && children.length === 2 ? ` ${iconButtonIconClass}--on` : '')))
   } else {
     children.filter(vnode => isIconComponent)
-            .forEach(vnode => addProps(vnode, {
-              class: buttonIconClass
-            }))
+            .forEach(vnode => mergeClasses(vnode, buttonIconClass))
    
   }
     return h(
@@ -29,11 +26,4 @@ export default (props, {slots, attrs}) => {
     )
 }
 
-// is there  an easier way to do this from vue 3 library?
-const addProps = (vnode, props) => {
-  vnode.props = vnode.props || {}
-  // may potentially override
-  Object.assign(vnode.props, props)
-
-}
 const isIconComponent = node => node.type && node.type.name === 'VmcIcon'

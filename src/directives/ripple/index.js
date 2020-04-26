@@ -1,6 +1,7 @@
 import {numbers, strings, cssClasses} from '@material/ripple/constants'
 import {getNormalizedEventCoords} from '@material/ripple/util';
 import {applyPassive} from '@material/dom/events';
+import {mergeClasses} from '@/util'
 import './index.sass';
 
 const MDC_RIPPLE_CLASS = 'mdc-ripple-surface'
@@ -26,17 +27,17 @@ const getWindowPageOffset = () => ({x: window.pageXOffset, y: window.pageYOffset
 const deactivate = evt => {
   const el = evt.currentTarget
   el.removeEventListener('keyup', deactivate)
-      requestAnimationFrame(() => {
-        el.classList.remove(cssClasses.FG_ACTIVATION)
-        el.classList.add(cssClasses.FG_DEACTIVATION)
-        setTimeout(() => {
-          el.classList.remove(cssClasses.FG_DEACTIVATION);
-      }, numbers.FG_DEACTIVATION_MS);
-        el._state = {}
-      })
+  requestAnimationFrame(() => {
+    removeClass(el, cssClasses.FG_ACTIVATION)
+    addClass(el, cssClasses.FG_DEACTIVATION)
+    setTimeout(() => {
+      removeClass(el, cssClasses.FG_DEACTIVATION);
+    }, numbers.FG_DEACTIVATION_MS);
+    deleteUIState(el)
+  })
 }
 
-const isUnbounded = el => el.classList.contains(cssClasses.UNBOUNDED)
+const isUnbounded = el => containsClass(el, cssClasses.UNBOUNDED)
 
 // calculate and set sizes in states, update css variables
 const layout = el => {
@@ -68,7 +69,7 @@ const layout = el => {
     el.style.setProperty(strings.VAR_TOP, `${top}px`);
   }
 
-  Object.assign(el._state, { initialSize, width, height })
+  updateUIState(el, { initialSize, width, height })
 }
 
 const activate = evt => {
@@ -78,7 +79,7 @@ const activate = evt => {
 
   // this sets initialSize in _state
   layout(el)
-  const {initialSize, width, height } = el._state
+  const {initialSize, width, height } = getUIState(el)
   const unbounded = isUnbounded(el)
 
   // animateActivation
@@ -106,24 +107,52 @@ const activate = evt => {
     el.style.setProperty(VAR_FG_TRANSLATE_END, translateEnd);
   }
 
-  el.classList.add(cssClasses.FG_ACTIVATION);
+  addClass(el, cssClasses.FG_ACTIVATION);
 }
 
 export default {
     // directive definition
-    beforeMount: function (el, {arg = ''} ) {
-      el._state = {}
-      el.classList.add(cssClasses.ROOT)
+    beforeMount: function (el, {arg = ''}, vnode ) {
+      initState(el)
+      addClass(el, cssClasses.ROOT)
 
       const args = arg.split('&')
-      if (!args.includes('no-surface')) el.classList.add(MDC_RIPPLE_CLASS)
+      if (!args.includes('no-surface')) addClass(el ,MDC_RIPPLE_CLASS)
       if (args.includes('unbounded')) {
-        el.classList.add(cssClasses.UNBOUNDED);
+        addClass(el, cssClasses.UNBOUNDED);
         requestAnimationFrame(() => layout(el))
       }
 
       ACTIVATION_EVENT_TYPES.forEach(evtType => addEventListener(el, evtType, activate));
-    }
+    },
+  updated(el) {
+    el._state.class.forEach(clazz => el.classList.add(clazz))
   }
+
+  }
+
+const initState = el => {
+  el._state = {
+    class: new Set(),
+    uiState: {}
+  }
+}
+const getUIState = el => el._state.uiState
+const updateUIState = (el, uiState) => el._state.uiState = uiState
+const deleteUIState = el => el._state.uiState = {}
+
+const addClass = (el, clazz) => {
+  el._state.class.add(clazz)
+  el.classList.add(clazz)
+}
+
+const removeClass = (el, clazz) => {
+  el._state.class.delete(clazz)
+  el.classList.remove(clazz)
+}
+
+const containsClass = (el, clazz) => {
+  return el._state.class.has(clazz)
+}
 
 const addEventListener = (el, evtType, handler) => el.addEventListener(evtType, handler, applyPassive())
