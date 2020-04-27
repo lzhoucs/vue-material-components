@@ -6,3 +6,6 @@ export const mergeClasses = (vnode, classes) => {
   vnode.props.class = vnode.props.class || ''
   vnode.props.class += ` ${classes}`
 }
+
+let _uid = 1;
+export const uid = () => _uid++

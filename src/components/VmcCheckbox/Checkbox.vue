@@ -2,7 +2,7 @@
   <div class="mdc-checkbox"
     v-ripple:no-surface&unbounded
   >
-                    <input type="checkbox"
+                    <input v-bind="idBinding" type="checkbox"
                            class="mdc-checkbox__native-control"
                            />
                     <div class="mdc-checkbox__background">
@@ -19,9 +19,20 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 import ripple from 'D/ripple'
 export default {
   name: 'VmcCheckbox',
+  props: {
+    id: {
+      type: String,
+      required: false
+    }
+  },
+  setup(props) {
+    const idBinding = computed(() => props.id && { id: props.id } )
+    return { idBinding }
+  },
   directives: {
     ripple
   }
