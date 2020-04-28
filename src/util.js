@@ -9,3 +9,5 @@ export const mergeClasses = (vnode, classes) => {
 
 let _uid = 1;
 export const uid = () => _uid++
+
+export const isIconComponent = node => node.type && node.type.name === 'VmcIcon'

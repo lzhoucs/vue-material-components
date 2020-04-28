@@ -1,6 +1,6 @@
 import RegularButton from './Button.vue'
 import IconButton from './IconButton.vue'
-import {mergeClasses} from '@/util'
+import {mergeClasses, isIconComponent} from '@/util'
 import { h } from 'vue'
 
 const buttonIconClass = "mdc-button__icon"
@@ -26,4 +26,3 @@ export default (props, {slots, attrs}) => {
     )
 }
 
-const isIconComponent = node => node.type && node.type.name === 'VmcIcon'
