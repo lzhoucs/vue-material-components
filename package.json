@@ -1,6 +1,6 @@
 {
   "name": "vue-material-components",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "A strict material-components-web reimplementation in Vue.js natively reusing original stylings",
   "keywords": [
     "material-components-web",
