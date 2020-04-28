@@ -4,6 +4,7 @@
       extended && 'mdc-fab--extended',
       mini && 'mdc-fab--mini'
       ]"
+    v-ripple:no-surface
   >
     <div class="mdc-fab__ripple"></div>
     <slot></slot>
@@ -11,6 +12,7 @@
 </template>
 
 <script>
+import ripple from 'D/ripple'
 export default {
   name: 'Fab',
   props: {
@@ -22,6 +24,9 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  directives: {
+    ripple
   }
 }
 </script>
