@@ -22,7 +22,7 @@
 import { computed } from 'vue'
 import ripple from 'D/ripple'
 export default {
-  name: 'VmcCheckbox',
+  name: 'Checkbox',
   props: {
     id: {
       type: String,

@@ -15,7 +15,7 @@
 import ripple from 'D/ripple'
 
 export default {
-  name: 'VmcButton',
+  name: 'Button',
   props: {
     raised: {
       type: Boolean,
