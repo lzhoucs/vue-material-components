@@ -28,7 +28,7 @@ export default {
   },
   setup() {
     return {
-      instanceId: `formfield-${uid()}`
+      instanceId: `vmc-formfield-${uid()}`
     }
   }
 }
