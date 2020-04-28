@@ -33,4 +33,8 @@ export default {
 
 <style lang="sass">
 @use "@material/fab/mdc-fab"
+
+.mdc-fab--extended .mdc-fab__label+.mdc-fab__icon
+  margin-left: 12px
+  margin-right: -8px
 </style>
