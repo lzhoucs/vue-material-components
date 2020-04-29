@@ -6,3 +6,6 @@ export {default as VmcFormField} from "./components/VmcFormField/index.vue"
 export {default as VmcRadio} from "./components/VmcRadio"
 export {default as VmcSwitch} from "./components/VmcSwitch/index.vue"
 export {default as VmcFab} from "./components/VmcFab"
+
+export {default as VmcTabs} from "./components/VmcTabs/index.vue"
+export {default as VmcTab} from "./components/VmcTab"
