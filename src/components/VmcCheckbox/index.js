@@ -1,6 +1,6 @@
 import Checkbox from './Checkbox.vue'
 import FormField from 'C/VmcFormField/index.vue'
 import { h } from 'vue'
-import delegateFactory from 'C/delegate-factory'
+import {formFieldDelegate} from 'C/functional-component-factory'
 
-export default delegateFactory(Checkbox)
+export default formFieldDelegate(Checkbox)
