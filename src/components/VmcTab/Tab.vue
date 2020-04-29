@@ -8,12 +8,15 @@
       <slot></slot>
     </span>
     <tab-indicator :active="active"></tab-indicator>
-    <span class="mdc-tab__ripple"></span>
+    <span class="mdc-tab__ripple"
+    v-ripple:no-surface
+    ></span>
   </button>
 
 </template>
 
 <script>
+import ripple from 'D/ripple'
 import TabIndicator from './TabIndicator.vue'
 export default {
   name: 'Tab',
@@ -25,6 +28,9 @@ export default {
   },
   components: {
     TabIndicator
+  },
+  directives: {
+    ripple
   }
 }
 </script>

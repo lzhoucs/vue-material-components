@@ -1,5 +1,5 @@
 <template>
-  <div class="mdc-tab-bar" role="tablist">
+  <div class="mdc-tab-bar">
     <tab-scroller><slot></slot></tab-scroller>
   </div>
 </template>
