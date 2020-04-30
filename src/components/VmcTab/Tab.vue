@@ -3,6 +3,7 @@
     :class="[
       active && 'mdc-tab--active'
       ]"
+    @click="!active && $emit('activate', href)"
   >
     <span class="mdc-tab__content">
       <slot></slot>
@@ -24,6 +25,10 @@ export default {
     active: {
       type: Boolean,
       default: false
+    },
+    href: {
+      type: String,
+      required: true
     }
   },
   components: {
