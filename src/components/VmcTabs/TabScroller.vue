@@ -9,6 +9,7 @@
 </template>
 
 <script>
+// doesn't do much right now, or is there anything needs to be done?
 export default {
   name: 'TabScroller'
 }
