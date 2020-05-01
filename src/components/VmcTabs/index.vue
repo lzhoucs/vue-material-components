@@ -33,10 +33,12 @@ export default {
       const widthDelta = prevWidth / currWidth;
       const xPosition = prevLeft - currLeft;
 
+      curr.el.classList.add('mdc-tab-indicator--no-transition')
       currIndicatorContentEl.style.setProperty('transform', `translateX(${xPosition}px) scaleX(${widthDelta})`)
 
       currIndicatorContentEl.getBoundingClientRect()
 
+      curr.el.classList.remove('mdc-tab-indicator--no-transition')
       currIndicatorContentEl.style.setProperty('transform', '')
     })
 
