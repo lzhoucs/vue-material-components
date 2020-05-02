@@ -1,7 +1,8 @@
 <template>
   <button class="mdc-tab"
     :class="[
-      active && 'mdc-tab--active'
+      active && 'mdc-tab--active',
+      stacked && 'mdc-tab--stacked'
       ]"
     @click="!active && $emit('activate', href)"
   >
@@ -29,6 +30,10 @@ export default {
     href: {
       type: String,
       required: true
+    },
+    stacked: {
+      type: Boolean,
+      default: false
     }
   },
   components: {
