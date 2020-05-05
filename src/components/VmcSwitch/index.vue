@@ -9,7 +9,7 @@ Extraneous non-emits event listeners (update:modelValue) were passed to componen
   >
                 <div class="mdc-switch__track"></div>
                 <div class="mdc-switch__thumb-underlay"
-                  v-ripple:no-surface&unbounded
+                  v-ripple.noSurface.unbounded
                 >
                     <div class="mdc-switch__thumb"></div>
                     <input type="checkbox" :id="instanceId" :checked="modelValue" class="mdc-switch__native-control" @change="$emit('update:modelValue', $event.target.checked)">

@@ -1,7 +1,7 @@
 <template>
   <button class="mdc-icon-button"
     :class="modelValue && 'mdc-icon-button--on'"
-    v-ripple:no-surface&unbounded
+    v-ripple.noSurface.unbounded
     @click="$emit('update:modelValue', !modelValue)"
   ><slot></slot></button>
 

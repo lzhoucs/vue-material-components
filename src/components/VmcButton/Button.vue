@@ -5,7 +5,7 @@
       unelevated && 'mdc-button--unelevated',
       outlined && 'mdc-button--outlined'
     ]"
-    v-ripple:no-surface>
+    v-ripple.noSurface>
    <div class="mdc-button__ripple"></div>
    <span class="mdc-button__label"><slot></slot></span>
 </button>

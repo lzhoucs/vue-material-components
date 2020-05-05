@@ -1,6 +1,6 @@
 <template>
   <div class="mdc-checkbox"
-    v-ripple:no-surface&unbounded
+    v-ripple.noSurface.unbounded
   >
                     <input v-bind="idBinding" type="checkbox"
                            class="mdc-checkbox__native-control"

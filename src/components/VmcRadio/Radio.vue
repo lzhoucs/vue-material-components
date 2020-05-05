@@ -1,6 +1,6 @@
 <template>
 	<div class="mdc-radio"
-    v-ripple:no-surface&unbounded
+    v-ripple.noSurface.unbounded
   >
     <input v-bind="inputAttrsBinding" class="mdc-radio__native-control" type="radio">
     <div class="mdc-radio__background">

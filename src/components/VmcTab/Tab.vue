@@ -11,7 +11,7 @@
     </span>
     <tab-indicator :active="active"></tab-indicator>
     <span class="mdc-tab__ripple"
-    v-ripple:no-surface
+    v-ripple.noSurface
     ></span>
   </button>
 

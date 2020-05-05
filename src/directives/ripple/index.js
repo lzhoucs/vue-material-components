@@ -76,17 +76,12 @@ const activate = evt => {
   const el = evt.currentTarget
 
   POINTER_DEACTIVATION_EVENT_TYPES.forEach(evtType => addEventListener(el, evtType, deactivate));
-
   // this sets initialSize in _state
   layout(el)
   const {initialSize, width, height } = getUIState(el)
   const unbounded = isUnbounded(el)
 
   // animateActivation
-    const {VAR_FG_TRANSLATE_START, VAR_FG_TRANSLATE_END} = strings;
-    const {FG_DEACTIVATION, FG_ACTIVATION} = cssClasses;
-    const {DEACTIVATION_TIMEOUT_MS} = numbers;
-
   if (!unbounded) {
 
     let startPoint = getNormalizedEventCoords(evt, getWindowPageOffset(), el.getBoundingClientRect());
@@ -103,8 +98,8 @@ const activate = evt => {
     const translateStart = `${startPoint.x}px, ${startPoint.y}px`;
     const translateEnd = `${endPoint.x}px, ${endPoint.y}px`;
 
-    el.style.setProperty(VAR_FG_TRANSLATE_START, translateStart);
-    el.style.setProperty(VAR_FG_TRANSLATE_END, translateEnd);
+    el.style.setProperty(strings.VAR_FG_TRANSLATE_START, translateStart);
+    el.style.setProperty(strings.VAR_FG_TRANSLATE_END, translateEnd);
   }
 
   addClass(el, cssClasses.FG_ACTIVATION);
@@ -112,20 +107,34 @@ const activate = evt => {
 
 export default {
     // directive definition
-    beforeMount: function (el, {arg = ''}, vnode ) {
+    beforeMount: function (el, {arg = '', value, modifiers}, vnode ) {
+      if (value === false) {
+        console.log('Skip ripple for el', el)
+        return;
+      }
+
       initState(el)
       addClass(el, cssClasses.ROOT)
 
-      const args = arg.split('&')
-      if (!args.includes('no-surface')) addClass(el ,MDC_RIPPLE_CLASS)
-      if (args.includes('unbounded')) {
+      if (!modifiers.noSurface) addClass(el ,MDC_RIPPLE_CLASS)
+      if (modifiers.unbounded) {
         addClass(el, cssClasses.UNBOUNDED);
-        requestAnimationFrame(() => layout(el))
       }
 
       ACTIVATION_EVENT_TYPES.forEach(evtType => addEventListener(el, evtType, activate));
+
+      addEventListener(el, 'focus', () => addClass(el, cssClasses.BG_FOCUSED));
+      addEventListener(el, 'blur', () => removeClass(el, cssClasses.BG_FOCUSED));
+
+      if (modifiers.unbounded) {
+        requestAnimationFrame(() => layout(el))
+      }
     },
-  updated(el) {
+  updated(el, {value}) {
+      if (value === false) {
+        console.log('Skip ripple for el', el)
+        return;
+      }
     el._state.class.forEach(clazz => el.classList.add(clazz))
   }
 

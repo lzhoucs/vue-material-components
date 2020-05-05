@@ -5,6 +5,7 @@
       isFocused && 'mdc-text-field--focused',
       shouldFloat && 'mdc-text-field--label-floating'
       ]"
+    v-ripple.noSurface="hasRipple"
   >
   <span class="mdc-text-field__ripple"></span>
   <input @focus="activateFocus" @blur="deactivateFocus" class="mdc-text-field__input" type="text" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
@@ -18,6 +19,7 @@
 <script>
 import { ref, computed } from 'vue'
 import VmcFloatingLabel from 'C/VmcFloatingLabel/index.vue'
+import ripple from 'D/ripple'
 
 export default {
   props: {
@@ -42,6 +44,8 @@ export default {
       // !this.isFocused_ && !this.isValid() && !!this.getValue()
     )
 
+    const hasRipple = computed(() => props.mode === 'filled')
+
 
     const activateFocus = evt => {
       isFocused.value = true
@@ -61,11 +65,14 @@ export default {
 
     return {
       shouldFloat, shouldShake, activateFocus, deactivateFocus,
-      isFocused
+      isFocused, hasRipple
     }
   },
   components: {
     VmcFloatingLabel
+  },
+  directives: {
+    ripple
   }
 }
 </script>

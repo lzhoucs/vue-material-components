@@ -4,7 +4,7 @@
       extended && 'mdc-fab--extended',
       mini && 'mdc-fab--mini'
       ]"
-    v-ripple:no-surface
+    v-ripple.noSurface
   >
     <div class="mdc-fab__ripple"></div>
     <slot></slot>
