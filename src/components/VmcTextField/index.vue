@@ -3,14 +3,22 @@
     :class="[
       `mdc-text-field--${mode}`,
       isFocused && 'mdc-text-field--focused',
-      shouldFloat && 'mdc-text-field--label-floating'
+      shouldFloat && 'mdc-text-field--label-floating',
+      !label && 'mdc-text-field--no-label'
       ]"
     v-ripple:input.noSurface="hasRipple"
   >
-  <span class="mdc-text-field__ripple"></span>
+  <span class="mdc-text-field__ripple" v-if="hasRipple"></span>
   <input @focus="activateFocus" @blur="deactivateFocus" @mousedown="updateTransformOriginXCoordinate" class="mdc-text-field__input" type="text" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
-  <vmc-floating-label v-if="label" :float="!!shouldFloat">{{label}}</vmc-floating-label>
-  <vmc-line-ripple :transform-origin-x="transformOriginXCoordinate" :active="isFocused"/>
+
+  <template v-if="mode === 'filled'">
+    <vmc-floating-label v-if="label" :float="!!shouldFloat">{{label}}</vmc-floating-label>
+    <vmc-line-ripple :transform-origin-x="transformOriginXCoordinate" :active="isFocused"/>
+  </template>
+
+  <vmc-notched-outline v-else-if="mode === 'outlined'" :notch-width="notchWidth">
+    <vmc-floating-label ref="labelRef" v-if="label" :float="!!shouldFloat">{{label}}</vmc-floating-label>
+  </vmc-notched-outline>
 
 </label>
 
@@ -19,6 +27,7 @@
 <script>
 import { ref, computed } from 'vue'
 import VmcFloatingLabel from 'C/VmcFloatingLabel/index.vue'
+import VmcNotchedOutline from 'C/VmcNotchedOutline/index.vue'
 import VmcLineRipple from 'C/VmcLineRipple/index.vue'
 import ripple from 'D/ripple'
 
@@ -47,13 +56,18 @@ export default {
 
     const hasRipple = computed(() => props.mode === 'filled')
 
+    const labelRef = ref(null)
+
+    const notchWidth = computed(() =>
+      shouldFloat.value && props.mode === 'outlined' ? labelRef.value.getWidth() * 0.75 : null)
+
     const activateFocus = evt => {
       isFocused.value = true
 
       if (props.label) {
           // this.notchOutline(shouldFloat.value);
           // this.adapter_.shakeLabel(this.shouldShake);
-        }
+      }
       // if (this.helperText_) {
       //     this.helperText_.showToScreenReader();
       // }
@@ -63,7 +77,7 @@ export default {
       isFocused.value = false
     }
 
-    const transformOriginXCoordinate = ref(5)
+    const transformOriginXCoordinate = ref(null)
 
     const updateTransformOriginXCoordinate = evt => {
       const targetClientRect = evt.target.getBoundingClientRect();
@@ -73,12 +87,14 @@ export default {
     return {
       shouldFloat, shouldShake, activateFocus, deactivateFocus,
       isFocused, hasRipple,
-      transformOriginXCoordinate, updateTransformOriginXCoordinate
+      transformOriginXCoordinate, updateTransformOriginXCoordinate,
+      labelRef, notchWidth
     }
   },
   components: {
     VmcFloatingLabel,
-    VmcLineRipple
+    VmcLineRipple,
+    VmcNotchedOutline
   },
   directives: {
     ripple

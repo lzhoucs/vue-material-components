@@ -109,7 +109,6 @@ export default {
   // can't use beforeMount because listenerTarget may be a child of el which is not available in beforeMount
     mounted: function (el, {arg, value, modifiers}, vnode ) {
       if (value === false) {
-        console.log('Skip ripple for el', el)
         return;
       }
 
@@ -135,7 +134,6 @@ export default {
     },
   updated(el, {value}) {
       if (value === false) {
-        console.log('Skip ripple for el', el)
         return;
       }
     el._state.class.forEach(clazz => el.classList.add(clazz))
