@@ -8,10 +8,10 @@
     v-ripple:input.noSurface="hasRipple"
   >
   <span class="mdc-text-field__ripple"></span>
-  <input @focus="activateFocus" @blur="deactivateFocus" class="mdc-text-field__input" type="text" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
+  <input @focus="activateFocus" @blur="deactivateFocus" @mousedown="updateTransformOriginXCoordinate" class="mdc-text-field__input" type="text" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
   <vmc-floating-label v-if="label" :float="!!shouldFloat">{{label}}</vmc-floating-label>
+  <vmc-line-ripple :transform-origin-x="transformOriginXCoordinate" :active="isFocused"/>
 
-  <span class="mdc-line-ripple"></span>
 </label>
 
 </template>
@@ -19,6 +19,7 @@
 <script>
 import { ref, computed } from 'vue'
 import VmcFloatingLabel from 'C/VmcFloatingLabel/index.vue'
+import VmcLineRipple from 'C/VmcLineRipple/index.vue'
 import ripple from 'D/ripple'
 
 export default {
@@ -46,11 +47,10 @@ export default {
 
     const hasRipple = computed(() => props.mode === 'filled')
 
-
     const activateFocus = evt => {
       isFocused.value = true
-      // this.adapter_.activateLineRipple();
-        if (props.label) {
+
+      if (props.label) {
           // this.notchOutline(shouldFloat.value);
           // this.adapter_.shakeLabel(this.shouldShake);
         }
@@ -63,13 +63,22 @@ export default {
       isFocused.value = false
     }
 
+    const transformOriginXCoordinate = ref(5)
+
+    const updateTransformOriginXCoordinate = evt => {
+      const targetClientRect = evt.target.getBoundingClientRect();
+      transformOriginXCoordinate.value = evt.clientX - targetClientRect.left;
+    }
+
     return {
       shouldFloat, shouldShake, activateFocus, deactivateFocus,
-      isFocused, hasRipple
+      isFocused, hasRipple,
+      transformOriginXCoordinate, updateTransformOriginXCoordinate
     }
   },
   components: {
-    VmcFloatingLabel
+    VmcFloatingLabel,
+    VmcLineRipple
   },
   directives: {
     ripple
