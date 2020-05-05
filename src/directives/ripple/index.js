@@ -73,7 +73,7 @@ const layout = el => {
 }
 
 const activate = evt => {
-  const el = evt.currentTarget
+  const el = evt.currentTarget._rootEl || evt.currentTarget
 
   POINTER_DEACTIVATION_EVENT_TYPES.forEach(evtType => addEventListener(el, evtType, deactivate));
   // this sets initialSize in _state
@@ -106,8 +106,8 @@ const activate = evt => {
 }
 
 export default {
-    // directive definition
-    beforeMount: function (el, {arg = '', value, modifiers}, vnode ) {
+  // can't use beforeMount because listenerTarget may be a child of el which is not available in beforeMount
+    mounted: function (el, {arg, value, modifiers}, vnode ) {
       if (value === false) {
         console.log('Skip ripple for el', el)
         return;
@@ -116,15 +116,18 @@ export default {
       initState(el)
       addClass(el, cssClasses.ROOT)
 
-      if (!modifiers.noSurface) addClass(el ,MDC_RIPPLE_CLASS)
+      if (!modifiers.noSurface) addClass(el, MDC_RIPPLE_CLASS)
       if (modifiers.unbounded) {
         addClass(el, cssClasses.UNBOUNDED);
       }
 
-      ACTIVATION_EVENT_TYPES.forEach(evtType => addEventListener(el, evtType, activate));
+      const listenerTarget = arg ? el.querySelector(arg) : el
+      if (listenerTarget !== el) listenerTarget._rootEl = el
 
-      addEventListener(el, 'focus', () => addClass(el, cssClasses.BG_FOCUSED));
-      addEventListener(el, 'blur', () => removeClass(el, cssClasses.BG_FOCUSED));
+      ACTIVATION_EVENT_TYPES.forEach(evtType => addEventListener(listenerTarget, evtType, activate));
+
+      addEventListener(listenerTarget, 'focus', () => addClass(el, cssClasses.BG_FOCUSED));
+      addEventListener(listenerTarget, 'blur', () => removeClass(el, cssClasses.BG_FOCUSED));
 
       if (modifiers.unbounded) {
         requestAnimationFrame(() => layout(el))

@@ -5,7 +5,7 @@
       isFocused && 'mdc-text-field--focused',
       shouldFloat && 'mdc-text-field--label-floating'
       ]"
-    v-ripple.noSurface="hasRipple"
+    v-ripple:input.noSurface="hasRipple"
   >
   <span class="mdc-text-field__ripple"></span>
   <input @focus="activateFocus" @blur="deactivateFocus" class="mdc-text-field__input" type="text" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
