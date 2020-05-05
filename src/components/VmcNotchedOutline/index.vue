@@ -1,6 +1,9 @@
 <template>
   <span class="mdc-notched-outline"
-    :class="notchWidth && 'mdc-notched-outline--notched'"
+    :class="[
+      notchWidth && 'mdc-notched-outline--notched',
+      !noLabel ? 'mdc-notched-outline--upgraded' : 'mdc-notched-outline--no-label'
+      ]"
   >
       <span class="mdc-notched-outline__leading"></span>
       <span class="mdc-notched-outline__notch"
@@ -14,11 +17,20 @@
 </template>
 
 <script>
+import { computed } from 'vue'
+import { noChildren } from '@/util'
 
 export default {
   name: "VmcNotchedOutline",
   props: {
     notchWidth: Number
+  },
+  setup(props, {slots}) {
+    const noLabel = computed(() => noChildren(slots))
+
+    return {
+      noLabel
+    }
   }
 }
 </script>

@@ -22,3 +22,14 @@ export const uid = () => _uid++
 
 export const isIconComponent = node => node.type && node.type.name === 'VmcIcon'
 export const isTabComponent = node => node.type && node.type._name === 'VmcTab'
+
+export const noChildren = slots => {
+  if (!slots.default) return true;
+  const children = slots.default()
+
+  if (!children || !children.length) return true;
+
+  if (children.length === 1 && children[0].children === 'v-if') return true;
+
+  return false
+}
