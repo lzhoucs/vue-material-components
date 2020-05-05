@@ -26,7 +26,9 @@ export default {
     notchWidth: Number
   },
   setup(props, {slots}) {
-    const noLabel = computed(() => noChildren(slots))
+    // cause errors as of beta.7, switch to one off
+    // const noLabel = computed(() => noChildren(slots))
+    const noLabel = noChildren(slots)
 
     return {
       noLabel
