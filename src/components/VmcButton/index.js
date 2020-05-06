@@ -22,7 +22,7 @@ export default (props, {slots, attrs}) => {
     return h(
       component,
       attrs,
-      children
+      () => children
     )
 }
 
