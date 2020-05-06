@@ -9,7 +9,10 @@
     v-ripple:input.noSurface="hasRipple"
   >
   <span class="mdc-text-field__ripple" v-if="hasRipple"></span>
+
+  <span class="mdc-text-field__affix mdc-text-field__affix--prefix" v-if="prefix">{{prefix}}</span>
   <input @focus="activateFocus" @blur="deactivateFocus" @mousedown="updateTransformOriginXCoordinate" class="mdc-text-field__input" type="text" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
+  <span class="mdc-text-field__affix mdc-text-field__affix--suffix" v-if="suffix">{{suffix}}</span>
 
   <template v-if="mode === 'filled'">
     <vmc-floating-label v-if="label" :float="!!shouldFloat">{{label}}</vmc-floating-label>
@@ -38,7 +41,9 @@ export default {
       default: 'filled'
     },
     label: String,
-    modelValue: String
+    modelValue: String,
+    prefix: String,
+    suffix: String
   },
   name: 'VmcTextField',
   setup(props) {
