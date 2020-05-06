@@ -4,15 +4,19 @@
       `mdc-text-field--${mode}`,
       isFocused && 'mdc-text-field--focused',
       shouldFloat && 'mdc-text-field--label-floating',
-      !label && 'mdc-text-field--no-label'
+      !label && 'mdc-text-field--no-label',
+      prefixIcon && 'mdc-text-field--with-leading-icon',
+      suffixIcon && 'mdc-text-field--with-trailing-icon'
       ]"
     v-ripple:input.noSurface="hasRipple"
   >
   <span class="mdc-text-field__ripple" v-if="hasRipple"></span>
 
+  <vmc-icon class="mdc-text-field__icon mdc-text-field__icon--leading" v-if="prefixIcon">{{prefixIcon}}</vmc-icon>
   <span class="mdc-text-field__affix mdc-text-field__affix--prefix" v-if="prefix">{{prefix}}</span>
-  <input @focus="activateFocus" @blur="deactivateFocus" @mousedown="updateTransformOriginXCoordinate" class="mdc-text-field__input" type="text" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
+  <input @focus="isFocused = true" @blur="isFocused = false" @mousedown="updateTransformOriginXCoordinate" class="mdc-text-field__input" type="text" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
   <span class="mdc-text-field__affix mdc-text-field__affix--suffix" v-if="suffix">{{suffix}}</span>
+  <vmc-icon class="mdc-text-field__icon mdc-text-field__icon--trailing" v-if="suffixIcon">{{suffixIcon}}</vmc-icon>
 
   <template v-if="mode === 'filled'">
     <vmc-floating-label v-if="label" :float="!!shouldFloat">{{label}}</vmc-floating-label>
@@ -32,6 +36,7 @@ import { ref, computed } from 'vue'
 import VmcFloatingLabel from 'C/VmcFloatingLabel/index.vue'
 import VmcNotchedOutline from 'C/VmcNotchedOutline/index.vue'
 import VmcLineRipple from 'C/VmcLineRipple/index.vue'
+import VmcIcon from 'C/VmcIcon/index.vue'
 import ripple from 'D/ripple'
 
 export default {
@@ -43,7 +48,9 @@ export default {
     label: String,
     modelValue: String,
     prefix: String,
-    suffix: String
+    suffix: String,
+    prefixIcon: String,
+    suffixIcon: String
   },
   name: 'VmcTextField',
   setup(props) {
@@ -66,22 +73,6 @@ export default {
     const notchWidth = computed(() =>
       shouldFloat.value && props.mode === 'outlined' ? labelRef.value.getWidth() * 0.75 : null)
 
-    const activateFocus = evt => {
-      isFocused.value = true
-
-      if (props.label) {
-          // this.notchOutline(shouldFloat.value);
-          // this.adapter_.shakeLabel(this.shouldShake);
-      }
-      // if (this.helperText_) {
-      //     this.helperText_.showToScreenReader();
-      // }
-    }
-
-    const deactivateFocus = evt => {
-      isFocused.value = false
-    }
-
     const transformOriginXCoordinate = ref(null)
 
     const updateTransformOriginXCoordinate = evt => {
@@ -90,7 +81,7 @@ export default {
     }
 
     return {
-      shouldFloat, shouldShake, activateFocus, deactivateFocus,
+      shouldFloat,
       isFocused, hasRipple,
       transformOriginXCoordinate, updateTransformOriginXCoordinate,
       labelRef, notchWidth
@@ -99,7 +90,8 @@ export default {
   components: {
     VmcFloatingLabel,
     VmcLineRipple,
-    VmcNotchedOutline
+    VmcNotchedOutline,
+    VmcIcon
   },
   directives: {
     ripple
@@ -109,4 +101,6 @@ export default {
 
 <style lang="sass">
 @use "@material/textfield/mdc-text-field"
+// we don't have a separate component for this yet, mostly because no logic is needed at this point
+@use "@material/textfield/icon/mdc-text-field-icon"
 </style>
