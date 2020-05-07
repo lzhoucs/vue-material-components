@@ -12,3 +12,7 @@ export {default as VmcTabs} from "./components/VmcTabs/index.vue"
 export {default as VmcTab} from "./components/VmcTab"
 
 export {default as VmcTextField} from "./components/VmcTextField/index.vue"
+
+export {default as VmcList} from "./components/VmcList/index.vue"
+export {default as VmcListItem} from "./components/VmcListItem/index.vue"
+export {default as VmcListItemDivider} from "./components/VmcListItemDivider/index.vue"
