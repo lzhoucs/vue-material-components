@@ -1,5 +1,6 @@
 <template>
   <li class="mdc-list-item"
+    :class="selected && 'mdc-list-item--selected'"
     v-ripple.noSurface>
     <span v-if="title && subtitle" class="mdc-list-item__text">
       <span class="mdc-list-item__primary-text">{{title}}</span>
@@ -16,7 +17,8 @@ export default {
   name: 'VmcListItem',
   props: {
     title: String,
-    subtitle: String
+    subtitle: String,
+    selected: Boolean
   },
   directives: {
     ripple

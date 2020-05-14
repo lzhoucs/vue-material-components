@@ -23,6 +23,7 @@ export const uid = () => _uid++
 export const isIconComponent = node => node.type && node.type.name === 'VmcIcon'
 export const isTabComponent = node => node.type && node.type._name === 'VmcTab'
 export const isListChildren = node => node.type && ['VmcListItem', 'VmcListItemDivider'].includes(node.type.name)
+export const isListItemComponent = node => node.type && ['VmcListItem'].includes(node.type.name)
 
 export const noChildren = slots => {
   if (!slots.default) return true;
@@ -34,3 +35,7 @@ export const noChildren = slots => {
 
   return false
 }
+
+export const addOrRemove = (arry, item, isAdd = true) => isAdd ?
+  ( arry || [] ).concat(item) :
+  ( arry || [] ).filter(_item => _item !== item)
