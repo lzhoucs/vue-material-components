@@ -1,6 +1,7 @@
 <template>
   <li class="mdc-list-item"
     :class="selected && 'mdc-list-item--selected'"
+    @click="$emit('selected', selected)"
     v-ripple.noSurface>
     <span v-if="title && subtitle" class="mdc-list-item__text">
       <span class="mdc-list-item__primary-text">{{title}}</span>

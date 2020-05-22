@@ -8,7 +8,7 @@
 
 <script>
 import {isListChildren, isListItemComponent, addOrRemove} from '@/util'
-import { mergeProps  } from 'vue'
+import { cloneVNode  } from 'vue'
 
 export default {
   name: 'VmcList',
@@ -37,16 +37,16 @@ export default {
 
         const singleMode = props.selectionMode.startsWith('single')
 
-        children.forEach(vnode => {
+        return children.map(vnode => {
           // skip stuff like dividers
           if (!isListItemComponent(vnode)) return vnode;
 
           const value = vnode.props[props.selectionKey]
           const selected = singleMode ? props.modelValue === value : (props.modelValue || []).includes(value)
 
-          vnode.props = mergeProps(vnode.props, {
-            onClick() {
-              const currentlySelected = vnode.props.selected
+          return cloneVNode(vnode, {
+            // workaround. see: https://github.com/vuejs/vue-next/issues/1206
+            onSelected(currentlySelected) {
               if (singleMode) {
                 // in single selection mode, skip when it is already selected, however this is very optional
                 // since nothing would happen when emit an existing value up, vue seems to have mechanism to avoid
