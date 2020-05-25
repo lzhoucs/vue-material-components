@@ -22,7 +22,7 @@ export default {
     selectionMode: String,
     selectionKey: {
       type: String,
-      default: 'value'
+      default: 'title'
     },
     // TODO Is there way to not define type for this one
     modelValue: [String, Array]

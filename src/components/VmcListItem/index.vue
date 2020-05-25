@@ -3,7 +3,10 @@
     :class="selected && 'mdc-list-item--selected'"
     @click="$emit('selected', selected)"
     v-ripple.noSurface>
-    <slot name="prefix"></slot>
+
+    <vmc-icon class="mdc-list-item__graphic" v-if="prefixIcon">{{prefixIcon}}</vmc-icon>
+    <slot v-else name="prefix"></slot>
+
     <span v-if="title && subtitle" class="mdc-list-item__text">
       <span class="mdc-list-item__primary-text">{{title}}</span>
       <span class="mdc-list-item__secondary-text">{{subtitle}}</span>
@@ -14,16 +17,24 @@
 
 <script>
 import ripple from 'D/ripple'
+import VmcIcon from 'C/VmcIcon/index.vue'
 
 export default {
   name: 'VmcListItem',
   props: {
-    title: String,
+    title: {
+      type: String,
+      required: true
+    },
     subtitle: String,
-    selected: Boolean
+    selected: Boolean,
+    prefixIcon: String
   },
   directives: {
     ripple
+  },
+  components: {
+    VmcIcon
   }
 }
 </script>
