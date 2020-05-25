@@ -3,6 +3,7 @@
     :class="selected && 'mdc-list-item--selected'"
     @click="$emit('selected', selected)"
     v-ripple.noSurface>
+    <slot name="prefix"></slot>
     <span v-if="title && subtitle" class="mdc-list-item__text">
       <span class="mdc-list-item__primary-text">{{title}}</span>
       <span class="mdc-list-item__secondary-text">{{subtitle}}</span>

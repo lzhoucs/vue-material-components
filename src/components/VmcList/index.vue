@@ -8,7 +8,12 @@
 
 <script>
 import {isListChildren, isListItemComponent, addOrRemove} from '@/util'
-import { cloneVNode  } from 'vue'
+import VmcRadio from "C/VmcRadio"
+import { cloneVNode,
+         h,
+         /* not available for import: normalizeChildren, ShapeFlags  */
+         getCurrentInstance,
+} from 'vue'
 
 export default {
   name: 'VmcList',
@@ -44,7 +49,7 @@ export default {
           const value = vnode.props[props.selectionKey]
           const selected = singleMode ? props.modelValue === value : (props.modelValue || []).includes(value)
 
-          return cloneVNode(vnode, {
+          const newVNode = cloneVNode(vnode, {
             // workaround. see: https://github.com/vuejs/vue-next/issues/1206
             onSelected(currentlySelected) {
               if (singleMode) {
@@ -60,12 +65,33 @@ export default {
             },
             selected
           })
-        })
 
-        return children
+          const prefixNode = createSelectionNode(props.selectionMode.split('-')[1])
+          if (prefixNode) {
+            // solution 1: not available
+            // normalizeChildren(newVNode, {
+            //   prefix: () => prefixNode
+            // })
+
+            // solution 2: becuase normalizeChildren is not available, we are pretty much duplicating the logic here
+            // https://github.com/vuejs/vue-next/blob/master/packages/shared/src/shapeFlags.ts
+            const SLOTS_CHILDREN = 1 << 5;
+            newVNode.shapeFlag |= SLOTS_CHILDREN
+            newVNode.children = {
+              _ctx: getCurrentInstance(),
+              prefix: () => h('span', { class: 'mdc-list-item__graphic' }, prefixNode)
+            }
+          }
+
+          return newVNode
+        })
       }
     }
   }
+}
+
+const createSelectionNode = type => {
+  if (type === 'radio') return h(VmcRadio)
 }
 </script>
 
