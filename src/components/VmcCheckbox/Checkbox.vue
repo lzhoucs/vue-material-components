@@ -4,6 +4,7 @@
   >
                     <input v-bind="idBinding" type="checkbox"
                            class="mdc-checkbox__native-control"
+                      :checked="checked"
                            />
                     <div class="mdc-checkbox__background">
                         <svg class="mdc-checkbox__checkmark"
@@ -27,6 +28,10 @@ export default {
     id: {
       type: String,
       required: false
+    },
+    checked: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {

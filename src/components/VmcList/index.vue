@@ -9,6 +9,7 @@
 <script>
 import {isListChildren, isListItemComponent, addOrRemove} from '@/util'
 import VmcRadio from "C/VmcRadio"
+import VmcCheckbox from "C/VmcCheckbox"
 import { cloneVNode,
          h,
          /* not available for import: normalizeChildren, ShapeFlags  */
@@ -92,6 +93,7 @@ export default {
 
 const createSelectionNode = (type, checked) => {
   if (type === 'radio') return h(VmcRadio, { checked })
+  if (type === 'checkbox') return h(VmcCheckbox, { checked })
 }
 </script>
 
