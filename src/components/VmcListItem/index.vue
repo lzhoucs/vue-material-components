@@ -1,6 +1,6 @@
 <template>
   <li class="mdc-list-item"
-    :class="selected && 'mdc-list-item--selected'"
+    :class="selected && !$slots.prefix && 'mdc-list-item--selected'"
     @click="$emit('selected', selected)"
     v-ripple.noSurface>
 
