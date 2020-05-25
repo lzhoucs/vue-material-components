@@ -66,7 +66,7 @@ export default {
             selected
           })
 
-          const prefixNode = createSelectionNode(props.selectionMode.split('-')[1])
+          const prefixNode = createSelectionNode(props.selectionMode.split('-')[1], selected)
           if (prefixNode) {
             // solution 1: not available
             // normalizeChildren(newVNode, {
@@ -90,8 +90,8 @@ export default {
   }
 }
 
-const createSelectionNode = type => {
-  if (type === 'radio') return h(VmcRadio)
+const createSelectionNode = (type, checked) => {
+  if (type === 'radio') return h(VmcRadio, { checked })
 }
 </script>
 

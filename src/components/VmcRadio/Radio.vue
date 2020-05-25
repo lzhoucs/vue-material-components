@@ -2,7 +2,7 @@
 	<div class="mdc-radio"
     v-ripple.noSurface.unbounded
   >
-    <input v-bind="inputAttrsBinding" class="mdc-radio__native-control" type="radio">
+    <input :checked="checked" v-bind="inputAttrsBinding" class="mdc-radio__native-control" type="radio">
     <div class="mdc-radio__background">
       <div class="mdc-radio__outer-circle"></div>
       <div class="mdc-radio__inner-circle"></div>
@@ -24,6 +24,10 @@ export default {
     name: {
       type: String,
       required: false
+    },
+    checked: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {
