@@ -10,6 +10,7 @@
 import {isListChildren, isListItemComponent, addOrRemove} from '@/util'
 import VmcRadio from "C/VmcRadio"
 import VmcCheckbox from "C/VmcCheckbox"
+import {strings} from '@material/list/constants';
 import { cloneVNode,
          h,
          /* not available for import: normalizeChildren, ShapeFlags  */
@@ -54,6 +55,7 @@ export default {
             // workaround. see: https://github.com/vuejs/vue-next/issues/1206
             onSelected(currentlySelected) {
               if (singleMode) {
+                // debugger;
                 // in single selection mode, skip when it is already selected, however this is very optional
                 // since nothing would happen when emit an existing value up, vue seems to have mechanism to avoid
                 // unnecessary rendering when prop isn't changed as a result of an emit
@@ -63,6 +65,8 @@ export default {
                 const newModelValue = addOrRemove(props.modelValue, value, !currentlySelected)
                 emit('update:modelValue', newModelValue)
               }
+              // emit this for two purposes: 1. stick to MDC standard. 2. used by menu to close menu surface - this is also how MDC does it
+              emit(strings.ACTION_EVENT, value)
             },
             selected
           })
