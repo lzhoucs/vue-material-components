@@ -1,6 +1,7 @@
 <template>
   <ul class="mdc-list"
     :class="twoLine && 'mdc-list--two-line'"
+    tabindex="-1"
   >
     <component :is="items" />
   </ul>

@@ -1,6 +1,6 @@
 import {onMounted, watchEffect, ref, onUnmounted} from 'vue'
 import {MDCMenuSurface} from '@material/menu-surface';
-import {Corner} from '@material/menu-surface/constants';
+import {Corner, strings} from '@material/menu-surface/constants';
 
 export default function (props, {emit}) {
   let menuSurface = null
@@ -9,7 +9,9 @@ export default function (props, {emit}) {
 
   onMounted(() => {
     menuSurface = new MDCMenuSurface(surfaceRef.value)
-    menuSurface.listen('MDCMenuSurface:closed', () => emit('update:modelValue', false))
+    menuSurface.listen(strings.CLOSED_EVENT, () => emit('update:modelValue', false))
+    // assuming first child is the list
+    menuSurface.listen(strings.OPENED_EVENT, () => surfaceRef.value.firstElementChild.focus())
     props.corner && menuSurface.setAnchorCorner(Corner[props.corner])
   })
 
