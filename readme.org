@@ -41,3 +41,15 @@ yarn add vue-material-components
  <link href="https://cdn.site/vue-material-components/main.min.css" rel="stylesheet">
  <script src="https://cdn.site/vue-material-components/main.min.js"></script>
 #+END_SRC
+
+** Work in progress Components
+- [[https://material-components.github.io/material-components-web-catalog/#/component/typography][typography]]
+- [[https://material-components.github.io/material-components-web-catalog/#/component/theme][theme]]
+- [[https://material-components.github.io/material-components-web-catalog/#/component/snackbar][snackbar]]
+- [[https://material-components.github.io/material-components-web-catalog/#/component/slider][slider]]
+- [[https://material-components.github.io/material-components-web-catalog/#/component/card][card]]
+- [[https://material-components.github.io/material-components-web-catalog/#/component/chips][chips]]
+- [[https://material-components.github.io/material-components-web-catalog/#/component/data-table][data-table]]
+- [[https://material-components.github.io/material-components-web-catalog/#/component/dialog][dialog]]
+- [[https://material-components.github.io/material-components-web-catalog/#/component/drawer][drawer]]
+- [[https://material-components.github.io/material-components-web-catalog/#/component/select][mdc-select]]
