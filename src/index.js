@@ -18,3 +18,5 @@ export {default as VmcListItem} from "./components/VmcListItem/index.vue"
 export {default as VmcListItemDivider} from "./components/VmcListItemDivider/index.vue"
 
 export {default as VmcMenu} from "./components/VmcMenu/index.vue"
+
+export {default as VmcAppBar} from "./components/VmcAppBar/index.vue"
