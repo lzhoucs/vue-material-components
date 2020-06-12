@@ -1,5 +1,6 @@
 import {onMounted, ref, onUnmounted} from 'vue'
-import {numbers} from '@material/top-app-bar/constants'
+import {numbers, cssClasses} from '@material/top-app-bar/constants'
+import {addOrRemove} from '@/util'
 
 const getViewportScrollY = () => window.pageYOffset !== undefined ? window.pageYOffset : window.scrollTop;
 
@@ -65,27 +66,25 @@ export default function (props) {
   }
 
 
-  const fixedFlag = ref(false)
-
-  let wasScrolled = false
+  const fixedScrolled = ref(null)
   const handleScrollFixed = () => {
-     const currentScroll = getViewportScrollY()
+    const currentScroll = getViewportScrollY()
+    fixedScrolled.value = currentScroll > 0
+  }
 
-    if (currentScroll <= 0) {
-      if (wasScrolled) {
-        fixedFlag.value = false
-        wasScrolled = false;
-      }
-    } else {
-      if (!wasScrolled) {
-        fixedFlag.value = true;
-        wasScrolled = true;
-      }
+  const collapsed = ref(null)
+  const handleScrollShort = () => {
+    if (props.shortCollapsed) {
+      return;
     }
+
+    const currentScroll = getViewportScrollY();
+    collapsed.value = currentScroll > 0
   }
 
   const handleScrollDispatcher = () => {
     if (props.fixed) handleScrollFixed()
+    if (props.short || props.shortCollapsed) handleScrollShort()
     else handleScrollDefault()
   }
   onMounted(() => {
@@ -101,6 +100,7 @@ export default function (props) {
   return {
     rootRef,
     topOffset,
-    fixedFlag
+    fixedScrolled,
+    collapsed
   }
 }

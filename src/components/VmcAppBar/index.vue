@@ -1,7 +1,13 @@
 <template>
   <header class="mdc-top-app-bar" ref="rootRef" :style="{'top': topOffset}"
     :class="[
-      fixedFlag && 'mdc-top-app-bar--fixed',
+      fixed && 'mdc-top-app-bar--fixed',
+      fixedScrolled && 'mdc-top-app-bar--fixed-scrolled',
+
+      (short || shortCollapsed) && 'mdc-top-app-bar--short',
+      (short || shortCollapsed) && hasActions && 'mdc-top-app-bar--short-has-action-item',
+      (shortCollapsed || collapsed) && 'mdc-top-app-bar--short-collapsed',
+
       dense && 'mdc-top-app-bar--dense',
       prominent && 'mdc-top-app-bar--prominent'
       ]"
@@ -11,7 +17,7 @@
         <component :is="navigation"/>
         <span class="mdc-top-app-bar__title">{{title}}</span>
       </section>
-      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+      <section v-if="hasActions" class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
         <component :is="actions"/>
       </section>
     </div>
@@ -21,13 +27,20 @@
 <script>
 import useScrollHandler from './useScrollHandler'
 import {mergeClasses} from '@/util'
-// import {strings} from '@material/top-app-bar/constants'
 
 export default {
   name: "VmcAppBar",
   props: {
     title: String,
     fixed: {
+      type: Boolean,
+      default: false
+    },
+    short: {
+      type: Boolean,
+      default: false
+    },
+    shortCollapsed: {
       type: Boolean,
       default: false
     },
@@ -41,7 +54,16 @@ export default {
     }
   },
   setup(props, {slots}) {
-    const {rootRef, topOffset, fixedFlag } = useScrollHandler(...arguments)
+    if (props.short && props.shortCollapsed) {
+      console.warn('short and shortCollapsed should not be used at the same time')
+    }
+
+    const actionsCount = slots.actions ? slots.actions().length : 0
+    if ((props.short || props.shortCollapsed) && actionsCount > 1) {
+      console.warn('short top app bars should be used with no more than 1 action item')
+    }
+
+    const {rootRef, topOffset, fixedScrolled, collapsed} = useScrollHandler(...arguments)
 
     const createNavigationVNode = () => {
       const [navigationVNode] = slots.navigation()
@@ -60,9 +82,11 @@ export default {
     return {
       rootRef,
       topOffset,
-      fixedFlag,
+      fixedScrolled,
+      collapsed,
       navigation: () => createNavigationVNode(),
-      actions: () => createActionVNodes()
+      actions: () => createActionVNodes(),
+      hasActions: actionsCount > 0
     }
   }
 
