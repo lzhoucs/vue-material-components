@@ -1,7 +1,9 @@
 <template>
   <header class="mdc-top-app-bar" ref="rootRef" :style="{'top': topOffset}"
     :class="[
-      fixedFlag && 'mdc-top-app-bar--fixed'
+      fixedFlag && 'mdc-top-app-bar--fixed',
+      dense && 'mdc-top-app-bar--dense',
+      prominent && 'mdc-top-app-bar--prominent'
       ]"
   >
     <div class="mdc-top-app-bar__row">
@@ -26,6 +28,14 @@ export default {
   props: {
     title: String,
     fixed: {
+      type: Boolean,
+      default: false
+    },
+    dense: {
+      type: Boolean,
+      default: false
+    },
+    prominent: {
       type: Boolean,
       default: false
     }
