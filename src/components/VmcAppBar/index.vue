@@ -1,31 +1,58 @@
 <template>
-  <header class="mdc-top-app-bar" ref="rootRef" :style="{'top': topOffset}">
+  <header class="mdc-top-app-bar" ref="rootRef" :style="{'top': topOffset}"
+    :class="[
+      fixedFlag && 'mdc-top-app-bar--fixed'
+      ]"
+  >
     <div class="mdc-top-app-bar__row">
       <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-        <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" aria-label="Open navigation menu">menu</button>
-        <span class="mdc-top-app-bar__title">Page title</span>
+        <component :is="navigation"/>
+        <span class="mdc-top-app-bar__title">{{title}}</span>
       </section>
       <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Favorite">favorite</button>
-        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Search">search</button>
-        <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Options">more_vert</button>
+        <component :is="actions"/>
       </section>
     </div>
   </header>
 </template>
 
 <script>
-import ScrollHandler from './ScrollHandler'
 import useScrollHandler from './useScrollHandler'
+import {mergeClasses} from '@/util'
+// import {strings} from '@material/top-app-bar/constants'
 
 export default {
   name: "VmcAppBar",
-  setup() {
-    const {rootRef, topOffset} = useScrollHandler(...arguments)
+  props: {
+    title: String,
+    fixed: {
+      type: Boolean,
+      default: false
+    }
+  },
+  setup(props, {slots}) {
+    const {rootRef, topOffset, fixedFlag } = useScrollHandler(...arguments)
+
+    const createNavigationVNode = () => {
+      const [navigationVNode] = slots.navigation()
+
+      mergeClasses(navigationVNode, 'mdc-top-app-bar__navigation-icon')
+      return navigationVNode
+    }
+
+    const createActionVNodes = () => {
+      const vnodes = slots.actions()
+
+      vnodes.forEach(vnode => mergeClasses(vnode, 'mdc-top-app-bar__action-item'))
+      return vnodes
+    }
 
     return {
       rootRef,
-      topOffset
+      topOffset,
+      fixedFlag,
+      navigation: () => createNavigationVNode(),
+      actions: () => createActionVNodes()
     }
   }
 

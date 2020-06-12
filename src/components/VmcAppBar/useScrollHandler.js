@@ -3,9 +3,9 @@ import {numbers} from '@material/top-app-bar/constants'
 
 const getViewportScrollY = () => window.pageYOffset !== undefined ? window.pageYOffset : window.scrollTop;
 
-export default function () {
+export default function (props) {
   const rootRef = ref(null)
-  const topOffset = ref(null)
+  const topOffset = ref('0')
 
   let lastScrollPosition;
   let topAppBarHeight;
@@ -14,7 +14,7 @@ export default function () {
   let wasDocked = true;
   let isDockedShowing = true;
 
-  const handleScroll = () => {
+  const handleScrollDefault = () => {
     const currentScrollPosition = Math.max(getViewportScrollY(), 0);
 
     const diff = currentScrollPosition - lastScrollPosition;
@@ -64,8 +64,32 @@ export default function () {
     return partiallyShowing;
   }
 
+
+  const fixedFlag = ref(false)
+
+  let wasScrolled = false
+  const handleScrollFixed = () => {
+     const currentScroll = getViewportScrollY()
+
+    if (currentScroll <= 0) {
+      if (wasScrolled) {
+        fixedFlag.value = false
+        wasScrolled = false;
+      }
+    } else {
+      if (!wasScrolled) {
+        fixedFlag.value = true;
+        wasScrolled = true;
+      }
+    }
+  }
+
+  const handleScrollDispatcher = () => {
+    if (props.fixed) handleScrollFixed()
+    else handleScrollDefault()
+  }
   onMounted(() => {
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScrollDispatcher)
     lastScrollPosition = getViewportScrollY()
     topAppBarHeight = rootRef.value.clientHeight
   })
@@ -76,6 +100,7 @@ export default function () {
 
   return {
     rootRef,
-    topOffset
+    topOffset,
+    fixedFlag
   }
 }
