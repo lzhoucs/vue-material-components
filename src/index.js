@@ -20,3 +20,5 @@ export {default as VmcListItemDivider} from "./components/VmcListItemDivider/ind
 export {default as VmcMenu} from "./components/VmcMenu/index.vue"
 
 export {default as VmcAppBar} from "./components/VmcAppBar/index.vue"
+
+export {default as VmcDrawer} from "./components/VmcDrawer/index.vue"

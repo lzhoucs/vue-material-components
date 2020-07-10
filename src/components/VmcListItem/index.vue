@@ -1,6 +1,8 @@
 <template>
   <li class="mdc-list-item"
-    :class="selected && !$slots.prefix && 'mdc-list-item--selected'"
+    :class="
+      [selected && !$slots.prefix && 'mdc-list-item--selected',
+      activated && !$slots.prefix && 'mdc-list-item--activated']"
     @click="$emit('selected', selected)"
     v-ripple.noSurface>
 
@@ -28,6 +30,7 @@ export default {
     },
     subtitle: String,
     selected: Boolean,
+    activated: Boolean,
     prefixIcon: String
   },
   directives: {

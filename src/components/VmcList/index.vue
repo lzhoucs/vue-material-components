@@ -27,7 +27,8 @@ export default {
       default: 'title'
     },
     // TODO Is there way to not define type for this one
-    modelValue: [String, Array]
+    modelValue: [String, Array],
+    activationOnSelected: Boolean
   },
   setup(props, {slots, emit}) {
     const children = slots.default ? slots.default() : []
@@ -69,7 +70,7 @@ export default {
               // emit this for two purposes: 1. stick to MDC standard. 2. used by menu to close menu surface - this is also how MDC does it
               emit(strings.ACTION_EVENT, value)
             },
-            selected
+            ...(props.activationOnSelected ? { activated: selected } : {selected })
           })
 
           const prefixNode = createSelectionNode(props.selectionMode.split('-')[1], selected)
