@@ -84,7 +84,8 @@ export default function (props) {
 
   const handleScrollDispatcher = () => {
     if (props.short || props.shortCollapsed) handleScrollShort()
-    if (props.fixed) handleScrollFixed()
+    if (props.absolute) return
+    else if (props.fixed) handleScrollFixed()
     else handleScrollDefault()
   }
   onMounted(() => {

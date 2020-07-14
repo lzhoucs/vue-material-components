@@ -1,6 +1,7 @@
 <template>
   <header class="mdc-top-app-bar" ref="rootRef" :style="{'top': topOffset}"
     :class="[
+      absolute && 'absolute-top-app-bar',
       fixed && 'mdc-top-app-bar--fixed',
       fixedScrolled && 'mdc-top-app-bar--fixed-scrolled',
 
@@ -32,6 +33,12 @@ export default {
   name: "VmcAppBar",
   props: {
     title: String,
+
+    // add position: absolute and disable scroll behavor
+    absolute: {
+      type: Boolean,
+      default: false
+    },
     fixed: {
       type: Boolean,
       default: false
@@ -93,6 +100,10 @@ export default {
 }
 </script>
 
+<style lang="sass" scoped>
+.absolute-top-app-bar
+  position: absolute
+</style>
 <style lang="sass">
   @use "@material/top-app-bar/mdc-top-app-bar"
 </style>
