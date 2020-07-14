@@ -24,6 +24,7 @@ export const isIconComponent = node => node.type && node.type.name === 'VmcIcon'
 export const isTabComponent = node => node.type && node.type._name === 'VmcTab'
 export const isListChildren = node => node.type && ['VmcListItem', 'VmcListItemDivider'].includes(node.type.name)
 export const isListItemComponent = node => node.type && ['VmcListItem'].includes(node.type.name)
+export const isAppBarComponent = node => node.type && ['VmcAppBar'].includes(node.type.name)
 
 export const noChildren = slots => {
   if (!slots.default) return true;
