@@ -28,6 +28,7 @@
 <script>
 import useScrollHandler from './useScrollHandler'
 import {mergeClasses} from '@/util'
+import {onMounted} from 'vue'
 
 export default {
   name: "VmcAppBar",
@@ -71,6 +72,20 @@ export default {
     }
 
     const {rootRef, topOffset, fixedScrolled, collapsed} = useScrollHandler(...arguments)
+
+    onMounted(() => {
+      // maybge we can be a bit smarter, but for now let's assume immediate parent has position: relative/absolute
+      // we also not worry about the specified class by props for now
+      const fixedAdjustClass = `mdc-top-app-bar--fixed-adjust`
+
+      const parent = rootRef.value.parentElement;
+
+      if (parent.getElementsByClassName(fixedAdjustClass).length > 0) return;
+
+      const fixedAdjustEl = document.createElement('div')
+      fixedAdjustEl.classList.add(fixedAdjustClass);
+      parent.insertBefore(fixedAdjustEl, rootRef.value)
+    })
 
     const createNavigationVNode = () => {
       const [navigationVNode] = slots.navigation()
