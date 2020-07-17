@@ -1,8 +1,10 @@
 <template>
   <aside class="mdc-drawer"
+    ref="rootRef"
     @transitionend="handleTransitionEnd"
     :class="[
       dismissible && css.DISMISSIBLE,
+      modal && css.MODAL,
       (open || (state ==='closing')) && css.OPEN,
       open && (state !=='opened') && css.ANIMATE,
       (state === 'opening') && css.OPENING,
@@ -22,7 +24,10 @@
 <script>
 import {mergeProps } from '@/util'
 import {cssClasses as css} from '@material/drawer/constants'
-import userDismissible from './useDismissible'
+import handleTransition from './handleTransition'
+import { onMounted } from 'vue'
+import {insertAfter} from 'C/addEl'
+import { ref } from 'vue'
 
 export default {
   name: "VmcDrawer",
@@ -30,6 +35,7 @@ export default {
     title: String,
     subtitle: String,
     dismissible: Boolean,
+    modal: Boolean,
     open: Boolean
   },
   setup(props, {slots}) {
@@ -43,13 +49,21 @@ export default {
       return listVNode
     }
 
-    const { handleTransitionEnd, state } = userDismissible(...arguments)
+    const { handleTransitionEnd, state } = handleTransition(...arguments)
+
+    const rootRef = ref(null)
+
+    if (props.modal) {
+      // we don't have to check props.model since styling will make sure mdc-drawer-scrim is hidden by default and only display with mdc-drawer--modal
+      insertAfter('mdc-drawer-scrim', rootRef)
+    }
 
     return {
       content: contentVNodeFactory,
       state,
       handleTransitionEnd,
-      css
+      css,
+      rootRef
     }
   }
 }

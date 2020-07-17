@@ -1,12 +1,17 @@
 <template>
-  <div class="mdc-drawer-app-content">
+  <div ref="rootRef"
+    class="vmc-drawer-app-content"
+    :class="[
+      hasDismissibleDrawer && 'mdc-drawer-app-content'
+      ]">
     <component :is="content"></component>
   </div>
 </template>
 
 <script>
-import {mergeProps } from '@/util'
-import {isAppBarComponent} from '@/util'
+import {mergeProps, isAppBarComponent } from '@/util'
+import {cssClasses as css} from '@material/drawer/constants'
+import { onMounted, ref } from 'vue'
 
 export default {
   name: "VmcDrawerAppContent",
@@ -25,9 +30,27 @@ export default {
       return contentVNodes
     }
 
+
+    const rootRef = ref(null)
+    const hasDismissibleDrawer = ref(false)
+    const hasModalDrawer = ref(false)
+
+    onMounted(() => {
+      const drawer = rootRef.value.previousElementSibling;
+      if (drawer && drawer.classList.contains(css.DISMISSIBLE)) hasDismissibleDrawer.value = true
+    })
+
     return {
-      content: contentVNodesFactory
+      content: contentVNodesFactory,
+      rootRef,
+      hasDismissibleDrawer,
+      hasModalDrawer
     }
   }
 }
 </script>
+
+<style lang="sass" scoped>
+  .vmc-drawer-app-content
+    position: relative
+</style>

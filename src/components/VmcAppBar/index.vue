@@ -28,7 +28,7 @@
 <script>
 import useScrollHandler from './useScrollHandler'
 import {mergeClasses} from '@/util'
-import {addAdjacentElWithClass} from 'C/addEl'
+import {insertAfter} from 'C/addEl'
 import {onMounted} from 'vue'
 
 export default {
@@ -76,7 +76,7 @@ export default {
 
     // maybge we can be a bit smarter, but for now let's assume immediate parent has position: relative/absolute
     // we also not worry about the specified class by props for now
-    addAdjacentElWithClass('mdc-top-app-bar--fixed-adjust', rootRef)
+    insertAfter('mdc-top-app-bar--fixed-adjust', rootRef)
 
     const createNavigationVNode = () => {
       if (slots.navigation) {

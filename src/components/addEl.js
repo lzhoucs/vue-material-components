@@ -1,6 +1,6 @@
 import {onMounted} from 'vue'
 
-export const addAdjacentElWithClass = (className, refEl) => {
+const insert = (className, refEl, before = true) => {
     onMounted(() => {
       const _refEl = refEl.value || refEl
       const parent = _refEl.parentElement;
@@ -9,7 +9,9 @@ export const addAdjacentElWithClass = (className, refEl) => {
 
       const el = document.createElement('div')
       el.classList.add(className);
-      parent.insertBefore(el, _refEl)
+      if (before) parent.insertBefore(el, _refEl)
+      else _refEl.nextElementSibling ? parent.insertBefore(el, _refEl.nextElementSibling) : parent.append(el)
     })
-
 }
+export const insertBefore = (className, refEl) => insert(className, refEl, true)
+export const insertAfter = (className, refEl) => insert(className, refEl, false)

@@ -57,7 +57,6 @@ export default {
             // workaround. see: https://github.com/vuejs/vue-next/issues/1206
             onSelected(currentlySelected) {
               if (singleMode) {
-                // debugger;
                 // in single selection mode, skip when it is already selected, however this is very optional
                 // since nothing would happen when emit an existing value up, vue seems to have mechanism to avoid
                 // unnecessary rendering when prop isn't changed as a result of an emit
