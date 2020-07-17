@@ -21,8 +21,8 @@
 
 <script>
 import {mergeProps } from '@/util'
-import { nextTick, watch, ref, onMounted } from 'vue'
 import {cssClasses as css} from '@material/drawer/constants'
+import userDismissible from './useDismissible'
 
 export default {
   name: "VmcDrawer",
@@ -43,25 +43,7 @@ export default {
       return listVNode
     }
 
-    const state = ref(null)
-
-    watch(() => props.open, open => {
-      if (props.dismissible) {
-        if (open) {
-          requestAnimationFrame(() => {
-            setTimeout(() => state.value = "opening", 0)
-          })
-        } else {
-          state.value = "closing"
-        }
-      }
-
-    })
-
-    const handleTransitionEnd = () => {
-      if (state.value === 'opening') state.value = "opened"
-      else if (state.value === 'closing') state.value = "closed"
-    }
+    const { handleTransitionEnd, state } = userDismissible(...arguments)
 
     return {
       content: contentVNodeFactory,
