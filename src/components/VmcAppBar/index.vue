@@ -88,10 +88,12 @@ export default {
     })
 
     const createNavigationVNode = () => {
-      const [navigationVNode] = slots.navigation()
-
-      mergeClasses(navigationVNode, 'mdc-top-app-bar__navigation-icon')
-      return navigationVNode
+      if (slots.navigation) {
+        const [navigationVNode] = slots.navigation()
+        mergeClasses(navigationVNode, 'mdc-top-app-bar__navigation-icon')
+        return navigationVNode
+      }
+      return null
     }
 
     const createActionVNodes = () => {
