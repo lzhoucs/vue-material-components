@@ -49,9 +49,9 @@ export default {
       return listVNode
     }
 
-    const { handleTransitionEnd, state } = handleTransition(...arguments)
-
     const rootRef = ref(null)
+
+    const { handleTransitionEnd, state } = handleTransition(rootRef, ...arguments)
 
     if (props.modal) {
       // we don't have to check props.model since styling will make sure mdc-drawer-scrim is hidden by default and only display with mdc-drawer--modal

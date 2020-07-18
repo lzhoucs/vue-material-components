@@ -1,6 +1,6 @@
 import { ref, watch } from 'vue'
 
-export default function (props) {
+export default function (rootRef, props) {
   const state = ref(null)
 
   watch(() => props.open, open => {
@@ -16,7 +16,9 @@ export default function (props) {
 
   })
 
-  const handleTransitionEnd = () => {
+  const handleTransitionEnd = evt => {
+    if (evt.target !== rootRef.value) return;
+
     if (state.value === 'opening') state.value = "opened"
     else if (state.value === 'closing') state.value = "closed"
   }
