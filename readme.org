@@ -51,5 +51,4 @@ yarn add vue-material-components
 - [[https://material-components.github.io/material-components-web-catalog/#/component/chips][chips]]
 - [[https://material-components.github.io/material-components-web-catalog/#/component/data-table][data-table]]
 - [[https://material-components.github.io/material-components-web-catalog/#/component/dialog][dialog]]
-- [[https://material-components.github.io/material-components-web-catalog/#/component/drawer][drawer]]
 - [[https://material-components.github.io/material-components-web-catalog/#/component/select][mdc-select]]
