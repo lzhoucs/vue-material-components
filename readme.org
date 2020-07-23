@@ -49,6 +49,5 @@ yarn add vue-material-components
 - [[https://material-components.github.io/material-components-web-catalog/#/component/slider][slider]]
 - [[https://material-components.github.io/material-components-web-catalog/#/component/card][card]]
 - [[https://material-components.github.io/material-components-web-catalog/#/component/chips][chips]]
-- [[https://material-components.github.io/material-components-web-catalog/#/component/data-table][data-table]]
 - [[https://material-components.github.io/material-components-web-catalog/#/component/dialog][dialog]]
 - [[https://material-components.github.io/material-components-web-catalog/#/component/select][mdc-select]]
