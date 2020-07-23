@@ -6,7 +6,8 @@
                     <input v-bind="idBinding" type="checkbox"
                            class="mdc-checkbox__native-control"
                       :checked="_checked"
-                      @change="updateChecked"
+                      @change="updateChecked($event.target.checked)"
+                      v-model="_checked"
                            />
                     <div class="mdc-checkbox__background">
                         <svg class="mdc-checkbox__checkmark"
@@ -22,7 +23,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import ripple from 'D/ripple'
 export default {
   name: 'Checkbox',
@@ -36,10 +37,16 @@ export default {
       default: false
     }
   },
-  setup(props) {
-    const _checked = ref(props.checked)
-    // TODO emit 'update:checked' event
-    const updateChecked = evt => _checked.value = evt.target.checked
+  setup(props, {emit}) {
+
+    // TODO reusable
+    const _checked = ref(false)
+    watchEffect(() => _checked.value = props.checked)
+
+    const updateChecked = val => {
+      _checked.value = val
+      emit('update:checked', val)
+    }
 
     const idBinding = computed(() => props.id && { id: props.id } )
     return { idBinding, _checked, updateChecked }
