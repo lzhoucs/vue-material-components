@@ -1,6 +1,5 @@
 import {onMounted, ref, onUnmounted} from 'vue'
 import {numbers, cssClasses} from '@material/top-app-bar/constants'
-import {addOrRemove} from '@/util'
 
 const getViewportScrollY = () => window.pageYOffset !== undefined ? window.pageYOffset : window.scrollTop;
 
