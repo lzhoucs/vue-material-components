@@ -25,9 +25,8 @@
 import {mergeProps } from '@/util'
 import {cssClasses as css} from '@material/drawer/constants'
 import handleTransition from './handleTransition'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import {insertAfter} from 'C/addEl'
-import { ref } from 'vue'
 
 export default {
   name: "VmcDrawer",
