@@ -17,7 +17,7 @@
   </div></template>
 
 <script>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watchEffect } from 'vue'
 import {getCorrectEventName, getCorrectPropertyName} from '@material/animation/util';
 import {applyPassive} from '@material/dom/events';
 
@@ -95,10 +95,7 @@ export default {
       }
       value = value || 0; // coerce -0 to 0
 
-      console.log(value)
       emit('update:modelValue', value)
-      // TODO refactoring - watch value
-      updateUIForCurrentValue();
     }
 
 
@@ -106,13 +103,11 @@ export default {
       if (props.disabled) {
         return;
       }
-      console.log('down')
       inTransit.value = !handlingThumbTargetEvt
       handlingThumbTargetEvt = false;
       active.value = true
 
       const moveHandler = evt => {
-        console.log('move')
         evt.preventDefault();
         setValue(evt);
       };
@@ -121,7 +116,6 @@ export default {
 
       // TODO refactoring. maybe a more vue way is available
       const upHandler = () => {
-        console.log('up')
         active.value = false
 
         document.body.removeEventListener(moveEventType, moveHandler);
@@ -174,7 +168,6 @@ export default {
 
       }
       requestAnimationFrame(() => {
-        console.log(translatePx, pctComplete)
         thumbStyle.value = {
           [transformProp]: `translateX(${translatePx}px) translateX(-50%)`
         }
@@ -187,7 +180,13 @@ export default {
 
     onMounted(() => {
       registerEvents()
+
       layout()
+
+      watchEffect(() => {
+        // TODO double run problem, maybe a vue bug
+        updateUIForCurrentValue()
+      })
     })
 
     return {
