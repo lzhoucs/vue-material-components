@@ -46,7 +46,6 @@ yarn add vue-material-components
 - [[https://material-components.github.io/material-components-web-catalog/#/component/typography][typography]]
 - [[https://material-components.github.io/material-components-web-catalog/#/component/theme][theme]]
 - [[https://material-components.github.io/material-components-web-catalog/#/component/snackbar][snackbar]]
-- [[https://material-components.github.io/material-components-web-catalog/#/component/slider][slider]]
 - [[https://material-components.github.io/material-components-web-catalog/#/component/card][card]]
 - [[https://material-components.github.io/material-components-web-catalog/#/component/chips][chips]]
 - [[https://material-components.github.io/material-components-web-catalog/#/component/dialog][dialog]]
