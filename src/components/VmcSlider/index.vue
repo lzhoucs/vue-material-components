@@ -3,12 +3,15 @@
     :class="[
       inTransit && 'mdc-slider--in-transit',
       active && 'mdc-slider--active',
-      discrete && 'mdc-slider--discrete'
+      discrete && 'mdc-slider--discrete',
+      marker && 'mdc-slider--display-markers'
       ]"
   >
     <div class="mdc-slider__track-container">
       <div class="mdc-slider__track" :style="trackStyle"></div>
+      <div class="mdc-slider__track-marker-container" :style="markerStyle"></div>
     </div>
+
     <div ref="thumbRef" class="mdc-slider__thumb-container" :style="thumbStyle">
       <div v-if="discrete" class="mdc-slider__pin">
         <span class="mdc-slider__pin-value-marker">{{modelValue}}</span>
@@ -55,7 +58,8 @@ export default {
       default: 0
     },
     disabled: Boolean,
-    discrete: Boolean
+    discrete: Boolean,
+    marker: Boolean
   },
   setup(props, {emit}) {
     const rootRef = ref(null)
@@ -63,6 +67,7 @@ export default {
     // const trackRef = ref(null)
     const trackStyle = ref(null)
     const thumbStyle = ref(null)
+    const markerStyle = ref(null)
 
     const inTransit = ref(false)
     const active = ref(false)
@@ -187,6 +192,26 @@ export default {
 
     }
 
+    const setupTrackMarker = () => {
+      if (props.discrete && props.marker) {
+        const stepStr = resolvedStep.value.toLocaleString();
+        const maxStr = props.max.toLocaleString();
+        const minStr = props.min.toLocaleString();
+        // keep calculation in css for better rounding/subpixel behavior
+        const markerAmount = `((${maxStr} - ${minStr}) / ${stepStr})`;
+        const markerWidth = `2px`;
+        const markerBkgdImage = `linear-gradient(to right, currentColor ${
+            markerWidth}, transparent 0)`;
+        const markerBkgdLayout = `0 center / calc((100% - ${markerWidth}) / ${
+            markerAmount}) 100% repeat-x`;
+        const markerBkgdShorthand = `${markerBkgdImage} ${markerBkgdLayout}`;
+
+        markerStyle.value = {
+          'background': markerBkgdShorthand
+        }
+      }
+    }
+
     onMounted(() => {
       registerEvents()
 
@@ -195,6 +220,7 @@ export default {
       watchEffect(() => {
         // TODO double run problem, maybe a vue bug
         updateUIForCurrentValue()
+        setupTrackMarker()
       })
     })
 
@@ -203,6 +229,7 @@ export default {
       thumbRef,
       trackStyle,
       thumbStyle,
+      markerStyle,
       inTransit,
       active
     }
