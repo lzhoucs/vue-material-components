@@ -2,13 +2,18 @@
   <div ref="rootRef" class="mdc-slider"
     :class="[
       inTransit && 'mdc-slider--in-transit',
-      active && 'mdc-slider--active'
+      active && 'mdc-slider--active',
+      discrete && 'mdc-slider--discrete'
       ]"
   >
     <div class="mdc-slider__track-container">
       <div class="mdc-slider__track" :style="trackStyle"></div>
     </div>
     <div ref="thumbRef" class="mdc-slider__thumb-container" :style="thumbStyle">
+      <div v-if="discrete" class="mdc-slider__pin">
+        <span class="mdc-slider__pin-value-marker">{{modelValue}}</span>
+      </div>
+
       <svg class="mdc-slider__thumb" width="21" height="21">
         <circle cx="10.5" cy="10.5" r="7.875"></circle>
       </svg>
@@ -17,7 +22,7 @@
   </div></template>
 
 <script>
-import { onMounted, ref, watchEffect } from 'vue'
+import { onMounted, ref, watchEffect, computed } from 'vue'
 import {getCorrectEventName, getCorrectPropertyName} from '@material/animation/util';
 import {applyPassive} from '@material/dom/events';
 
@@ -49,7 +54,8 @@ export default {
       type: Number,
       default: 0
     },
-    disabled: Boolean
+    disabled: Boolean,
+    discrete: Boolean
   },
   setup(props, {emit}) {
     const rootRef = ref(null)
@@ -61,6 +67,8 @@ export default {
     const inTransit = ref(false)
     const active = ref(false)
 
+    const resolvedStep = computed(() => props.discrete && props.step === 0 ? 1 : props.step)
+
     let handlingThumbTargetEvt = false
     let rect;
 
@@ -71,10 +79,12 @@ export default {
       return props.min + pctComplete * (props.max - props.min);
     }
 
+    const quantize = value => Math.round(value / resolvedStep.value) * resolvedStep.value;
+
     const setValue = evt => {
       const clientX = evt.targetTouches && evt.targetTouches.length > 0 ?
-        evt.targetTouches[0].clientX :
-        evt.clientX;
+                                                                      evt.targetTouches[0].clientX :
+                                                                      evt.clientX;
 
       let value = computeValueFromClientX(clientX);
 
@@ -82,11 +92,10 @@ export default {
         return;
       }
 
-    const valueSetToBoundary = value === props.min || value === props.max;
-    // TODO step
-      // if (props.step && !valueSetToBoundary) {
-      // value = this.quantize_(value);
-      // }
+      const valueSetToBoundary = value === props.min || value === props.max;
+      if (resolvedStep.value && !valueSetToBoundary) {
+        value = quantize(value);
+      }
 
       if (value < props.min) {
         value = props.min;
