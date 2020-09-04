@@ -25,6 +25,7 @@
 import {mergeProps } from '@/util'
 import {cssClasses as css} from '@material/drawer/constants'
 import handleTransition from './handleTransition'
+import useState from 'C/use-state'
 import { onMounted, ref } from 'vue'
 import {insertAfter} from 'C/addEl'
 
@@ -49,8 +50,10 @@ export default {
     }
 
     const rootRef = ref(null)
+    const state = ref(null)
+    useState(state, () => props.dismissible || props.modal, ...arguments)
 
-    const { handleTransitionEnd, state } = handleTransition(rootRef, ...arguments)
+    const handleTransitionEnd = handleTransition(rootRef, state)
 
     if (props.modal) {
       // we don't have to check props.model since styling will make sure mdc-drawer-scrim is hidden by default and only display with mdc-drawer--modal
