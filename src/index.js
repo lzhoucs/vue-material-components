@@ -27,3 +27,5 @@ export {default as VmcDrawerAppContent} from "./components/VmcDrawerAppContent/i
 export {default as VmcTable} from "./components/VmcTable/index.vue"
 
 export {default as VmcSlider} from "./components/VmcSlider/index.vue"
+
+export {default as VmcSnackbar} from "./components/VmcSnackbar/index.vue"
