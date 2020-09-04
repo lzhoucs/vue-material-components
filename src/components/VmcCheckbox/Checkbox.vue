@@ -7,7 +7,6 @@
                            class="mdc-checkbox__native-control"
                       :checked="_checked"
                       @change="updateChecked($event.target.checked)"
-                      v-model="_checked"
                            />
                     <div class="mdc-checkbox__background">
                         <svg class="mdc-checkbox__checkmark"
